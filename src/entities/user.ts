@@ -1,6 +1,8 @@
 import { BaseEntityClass } from "./base";
-import { Entity, Column, OneToMany } from 'typeorm'
+import { Entity, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm'
 import { Attachment } from "./attachment";
+import { Contact } from "./contact";
+import { SystemRole } from "./systemRole";
 
 @Entity()
 export class User extends BaseEntityClass {
@@ -11,66 +13,73 @@ export class User extends BaseEntityClass {
     name: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     surname: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     username: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     password: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     city: string;
 
     @Column({
-        type: 'timestamp'
+        type: 'timestamp', nullable: true
     })
     date: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     birthplace: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     gender: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     contractType: string;
 
     @Column({
-        type: "float"
+        type: "float", nullable: true
     })
     grossAnnualSalary: number;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     businessName: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     vatNumber: string;
 
     @Column({
-        type: "varchar"
+        type: "varchar", nullable: true
     })
     attorny: string;
 
 
     @OneToMany(() => Attachment, f => f.user, {nullable: true})
     attachments: Attachment[];
+
+    @OneToMany(()=> Contact, c=> c.user, {nullable: true})
+    contacts: Contact[];
+
+    @ManyToMany(() => SystemRole, role => role.user)
+    @JoinTable()
+    roles: SystemRole[];
 }

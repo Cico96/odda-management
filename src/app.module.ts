@@ -5,6 +5,10 @@ import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './entities/user';
 import { Repository } from 'typeorm';
 import { Attachment } from './entities/attachment';
+import { Contact } from './entities/contact';
+import { Project } from './entities/project';
+import { ProjectRole } from './entities/projectRole';
+import { SystemRole } from './entities/systemRole';
 
 
 @Module({
@@ -17,12 +21,11 @@ import { Attachment } from './entities/attachment';
       password: 'admin',
       database: 'odda-management',
       entities: [
-        User,
-        Attachment
+        User, Attachment, Contact, Project, ProjectRole, SystemRole
       ],
       synchronize: true,
-    }),
-    TypeOrmModule.forFeature([User, Attachment])
+  }),
+    TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole])
   ],
   controllers: [AppController],
   providers: [AppService],
