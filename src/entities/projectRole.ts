@@ -10,8 +10,6 @@ export class ProjectRole extends BaseEntityClass {
         type: "varchar", nullable: true
     })
     type: string;
-
-    @ManyToMany(() => Project, project => project.roles)
-    project: Project;
+    
 
 }

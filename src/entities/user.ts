@@ -3,6 +3,9 @@ import { Entity, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typ
 import { Attachment } from "./attachment";
 import { Contact } from "./contact";
 import { SystemRole } from "./systemRole";
+import { Project } from "./project";
+import { Report } from "./report";
+import { Group } from "./group";
 
 @Entity()
 export class User extends BaseEntityClass {
@@ -82,4 +85,15 @@ export class User extends BaseEntityClass {
     @ManyToMany(() => SystemRole, role => role.user)
     @JoinTable()
     roles: SystemRole[];
+
+    @ManyToMany(() => Project)
+    @JoinTable()
+    projects: Project[];
+
+    @OneToMany(() => Report, report => report.user)
+    reports: Report[];
+
+    @ManyToMany(() => Group)
+    @JoinTable()
+    groups: Group[];
 }

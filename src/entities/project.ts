@@ -1,6 +1,9 @@
-import { Column, Entity, ManyToMany } from "typeorm";
+import { report } from "process";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
+import { Activity } from "./activity";
 import { BaseEntityClass } from "./base";
 import { ProjectRole } from "./projectRole";
+import { Report } from "./report";
 
 @Entity()
 export class Project extends BaseEntityClass {
@@ -35,6 +38,9 @@ export class Project extends BaseEntityClass {
     })
     estimatedBudget: number;
 
-    @ManyToMany(() => ProjectRole, role => role.project)
-    roles: ProjectRole[];
+    @OneToMany(() => Activity, activity => activity.project)
+    activities: Activity[];
+
+    @OneToMany(() => Report, report => report.project)
+    reports: Report[]
 }

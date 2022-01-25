@@ -9,6 +9,9 @@ import { Contact } from './entities/contact';
 import { Project } from './entities/project';
 import { ProjectRole } from './entities/projectRole';
 import { SystemRole } from './entities/systemRole';
+import { Activity } from './entities/activity';
+import { Report } from './entities/report';
+import { Group } from './entities/group';
 
 
 @Module({
@@ -21,11 +24,11 @@ import { SystemRole } from './entities/systemRole';
       password: 'admin',
       database: 'odda-management',
       entities: [
-        User, Attachment, Contact, Project, ProjectRole, SystemRole
+        User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group
       ],
       synchronize: true,
   }),
-    TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole])
+    TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group])
   ],
   controllers: [AppController],
   providers: [AppService],
