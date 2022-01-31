@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './entities/user';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Attachment } from './entities/attachment';
 import { Contact } from './entities/contact';
 import { Project } from './entities/project';
@@ -12,6 +12,8 @@ import { SystemRole } from './entities/systemRole';
 import { Activity } from './entities/activity';
 import { Report } from './entities/report';
 import { Group } from './entities/group';
+import { UserController } from './controllers/user-controller';
+import { UserProjectRole } from './entities/user-project-role';
 
 
 @Module({
@@ -24,13 +26,13 @@ import { Group } from './entities/group';
       password: 'admin',
       database: 'odda-management',
       entities: [
-        User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group
+        User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group, UserProjectRole
       ],
       synchronize: true,
   }),
-    TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group])
+    TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group, UserProjectRole])
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {
@@ -55,4 +57,34 @@ export class AppModule {
       entity: "USER"
     })
   }*/
+
+  constructor(@InjectRepository(User)
+  private userRepository: Repository<User>,
+  @InjectRepository(Project)
+  private projectRepository: Repository<Project>,
+  @InjectRepository(ProjectRole)
+  private projectRoleRepository: Repository<ProjectRole>,
+  @InjectRepository(UserProjectRole)
+  private userPrRepository: Repository<UserProjectRole>) {
+    //this.setUserProjectRole().then();
+  }
+
+  /*async setUserProjectRole(){
+
+    const id = 1;
+    const id_user = 4;
+
+    const user = await this.userRepository.findOne(id_user);
+    const project = await this.projectRepository.findOne(id);
+    const projectRole = await this.projectRoleRepository.findOne(id);
+
+    await this.userPrRepository.insert({
+      user: user,
+      project: project,
+      projectRole: projectRole
+    })
+
+  }*/
+
+
 }

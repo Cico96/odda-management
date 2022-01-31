@@ -12,4 +12,5 @@ export class ProjectRole extends BaseEntityClass {
     type: string;
     
 
+    
 }

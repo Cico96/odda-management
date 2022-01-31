@@ -2,6 +2,7 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import { Activity } from "./activity";
 import { BaseEntityClass } from "./base";
 import { Report } from "./report";
+import { User } from "./user";
 
 @Entity()
 export class Project extends BaseEntityClass {
@@ -40,5 +41,8 @@ export class Project extends BaseEntityClass {
     activities: Activity[];
 
     @OneToMany(() => Report, report => report.project)
-    reports: Report[]
+    reports: Report[];
+
+    @ManyToMany(() => User, (p) => p.projects)
+    users: User[];
 }
