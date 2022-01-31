@@ -56,7 +56,7 @@ export class AppModule {
       name: "CV",
       entity: "USER"
     })
-  }*/
+  }
 
   constructor(@InjectRepository(User)
   private userRepository: Repository<User>,
@@ -69,7 +69,7 @@ export class AppModule {
     //this.setUserProjectRole().then();
   }
 
-  /*async setUserProjectRole(){
+  async setUserProjectRole(){
 
     const id = 1;
     const id_user = 4;
