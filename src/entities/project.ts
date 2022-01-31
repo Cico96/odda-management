@@ -1,8 +1,6 @@
-import { report } from "process";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import { Activity } from "./activity";
 import { BaseEntityClass } from "./base";
-import { ProjectRole } from "./projectRole";
 import { Report } from "./report";
 
 @Entity()
