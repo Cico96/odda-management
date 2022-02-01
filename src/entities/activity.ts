@@ -30,7 +30,7 @@ export class Activity extends BaseEntityClass {
     project: Project;
 
     @ApiProperty({
-        type: Report
+        type: () => Report
     })
     @ManyToOne(() => Report, report => report.activities)
     report: Report;
