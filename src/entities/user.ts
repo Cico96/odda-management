@@ -139,5 +139,6 @@ export class User extends BaseEntityClass {
     groups: Group[];
 
     @OneToMany(() => UserProjectRole, (a) => a.user)
+    @JoinTable()
     userProjectRole: UserProjectRole[];
 }

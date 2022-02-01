@@ -58,16 +58,7 @@ export class AppModule {
     })
   }
 
-  constructor(@InjectRepository(User)
-  private userRepository: Repository<User>,
-  @InjectRepository(Project)
-  private projectRepository: Repository<Project>,
-  @InjectRepository(ProjectRole)
-  private projectRoleRepository: Repository<ProjectRole>,
-  @InjectRepository(UserProjectRole)
-  private userPrRepository: Repository<UserProjectRole>) {
-    //this.setUserProjectRole().then();
-  }
+ 
 
   async setUserProjectRole(){
 
@@ -85,6 +76,24 @@ export class AppModule {
     })
 
   }*/
+  constructor(@InjectRepository(User)
+  private userRepository: Repository<User>,
+  @InjectRepository(Project)
+  private projectRepository: Repository<Project>,
+  @InjectRepository(ProjectRole)
+  private projectRoleRepository: Repository<ProjectRole>,
+  @InjectRepository(UserProjectRole)
+  private userPrRepository: Repository<UserProjectRole>) {
+    //this.setUserProjectRole().then();
+    //this.test().then()
+  }
+
+  /*async test() {
+    const result = await this.userRepository.find({
+      relations: ['projects', 'userProjectRole']
+    })
 
 
+    console.log(JSON.stringify(result));
+  }*/
 }

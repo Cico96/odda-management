@@ -7,7 +7,7 @@ import { User } from "./user";
 @Entity()
 export class UserProjectRole extends BaseEntityClass {
 
-    @OneToOne(() => User)
+    @OneToOne(() => User, (f) => f.userProjectRole)
     @JoinColumn()
     user: User;
 
