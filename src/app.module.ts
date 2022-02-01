@@ -88,12 +88,12 @@ export class AppModule {
     //this.test().then()
   }
 
-  /*async test() {
-    const result = await this.userRepository.find({
-      relations: ['projects', 'userProjectRole']
-    })
+  // async test() {
+  //   const result = await this.userRepository.find({
+  //     relations: ['projects', 'userProjectRole' ,'userProjectRole.user', 'userProjectRole.project' , 'projects.users']
+  //   })
 
 
-    console.log(JSON.stringify(result));
-  }*/
+  //   console.log(JSON.stringify(result));
+  // }
 }

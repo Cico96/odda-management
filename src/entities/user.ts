@@ -116,28 +116,48 @@ export class User extends BaseEntityClass {
     })
     attorny: string;
 
-
+    @ApiProperty({
+        type: Attachment
+    })
     @OneToMany(() => Attachment, f => f.user, {nullable: true})
     attachments: Attachment[];
 
+    @ApiProperty({
+        type: Contact
+    })
     @OneToMany(()=> Contact, c=> c.user, {nullable: true})
     contacts: Contact[];
 
+    @ApiProperty({
+        type: SystemRole
+    })
     @ManyToMany(() => SystemRole, role => role.user)
     @JoinTable()
     roles: SystemRole[];
 
+    @ApiProperty({
+        type: Project
+    })
     @ManyToMany(() => Project, pr => pr.users)
     @JoinTable()
     projects: Project[];
 
+    @ApiProperty({
+        type: Report
+    })
     @OneToMany(() => Report, report => report.user)
     reports: Report[];
 
+    @ApiProperty({
+        type: Group
+    })
     @ManyToMany(() => Group)
     @JoinTable()
     groups: Group[];
 
+    @ApiProperty({
+        type: UserProjectRole
+    })
     @OneToMany(() => UserProjectRole, (a) => a.user)
     @JoinTable()
     userProjectRole: UserProjectRole[];
