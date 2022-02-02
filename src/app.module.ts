@@ -14,6 +14,7 @@ import { Report } from './entities/report';
 import { Group } from './entities/group';
 import { UserController } from './controllers/user-controller';
 import { UserProjectRole } from './entities/user-project-role';
+import { UserService } from './services/user-service';
 
 
 @Module({
@@ -33,7 +34,7 @@ import { UserProjectRole } from './entities/user-project-role';
     TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group, UserProjectRole])
   ],
   controllers: [AppController, UserController],
-  providers: [AppService],
+  providers: [AppService, UserService],
 })
 export class AppModule {
 

@@ -3,23 +3,21 @@ import { ApiBody, ApiParam, ApiResponse, ApiTags,  } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/entities/project';
 import { User } from 'src/entities/user';
+import { UserService } from 'src/services/user-service';
 import { Repository } from 'typeorm';
 
 @ApiTags("user")
 @Controller('user')
 export class UserController {
 
-    constructor(@InjectRepository(User)
-    private userRepository: Repository<User>,
-    @InjectRepository(Project)
-    private projectRepository: Repository<Project>){
+    constructor(private userService: UserService){
 
     }
 
     @ApiBody({
         type: User,
         required: true,
-        description: "We invia sto azzo di user"
+        description: "Create user"
     })
     @Post()
     async createUser(@Res() response, @Body() user: User) {}
@@ -27,7 +25,7 @@ export class UserController {
     
     @Get("/")
     async getAllUsers() {
-        const users = await this.userRepository.find();
+        const users = await this.userService.getAllUsers();
         return users;
     }
 
@@ -37,10 +35,7 @@ export class UserController {
         type: Number
     })
     async getUserById(@Param("id") id: number) {
-        const users = await this.userRepository.findOne({
-            where:{id} ,
-            relations: ["projects", "userProjectRole", "userProjectRole.project"]
-        });
+        const users = await this.userService.getUserById(id);
         return users;
     }
     
@@ -50,28 +45,25 @@ export class UserController {
         type: Number
     })
     async getUserProjects(@Param("id") id: number) {
-        const projects =( await this.userRepository.findOne({
-            where:{id} ,
-            relations: ["projects", "userProjectRole", "userProjectRole.project"]
-        })).projects;
+        const projects = (await this.userService.getUserProjects(id)).projects;
         return projects;
     }
 
-    @Get("/:id/project/:pId")
-    @ApiParam({
-        name: 'id',
-        type: Number
-    })
-    @ApiParam({
-        name: 'pId',
-        type: Number
-    })
-    async getUserProject(@Param("id") id: number, @Param("pId") pId: number) {
-        const users = await this.userRepository.findOne({
-            where:{id} ,
-            relations: ["projects", "userProjectRole", "userProjectRole.project"]
-        });
-        return users;
-    }
+    // @Get("/:id/project/:pId")
+    // @ApiParam({
+    //     name: 'id',
+    //     type: Number
+    // })
+    // @ApiParam({
+    //     name: 'pId',
+    //     type: Number
+    // })
+    // async getUserProjectRole(@Param("id") id: number, @Param("pId") pId: number) {
+    //     const users = await this.userRepository.findOne({
+    //         where:{id} ,
+    //         relations: ["projects", "userProjectRole", "userProjectRole.project"]
+    //     });
+    //     return users;
+    // }
     
 }

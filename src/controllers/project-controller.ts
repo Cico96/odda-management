@@ -1,22 +1,20 @@
-import { Body, Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Post, Res } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
+import { Project } from "src/entities/project";
 
-@ApiTags('project')
+@ApiTags("project")
 @Controller('project')
 export class ProjectController {
 
-    @Get('getAllProjets')
+    @ApiBody({
+        type: Project,
+        required: true,
+        description: 'Create project'
+    })
+    @Post()
+    async createProject(@Res() response, @Body() project: Project) {}
+
+    @Get('/')
     async getAllProjects() {}
 
-    @Get('getProjectById')
-    @ApiBody({
-        type: Number,
-        required: true,
-        description: "Get project by id"
-    })
-    @ApiParam({
-        name: 'id',
-        type: Number
-    })
-    async getProjectById(@Body() id: number) {}
 }
