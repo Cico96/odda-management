@@ -10,9 +10,7 @@ import { Repository } from 'typeorm';
 @Controller('user')
 export class UserController {
 
-    constructor(private userService: UserService){
-
-    }
+    constructor(private userService: UserService) { }
 
     @ApiBody({
         type: User,
@@ -47,6 +45,20 @@ export class UserController {
     async getUserProjects(@Param("id") id: number) {
         const projects = (await this.userService.getUserProjects(id)).projects;
         return projects;
+    }
+
+    @Get("/:id/project/:pId")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    @ApiParam({
+        name: 'pId',
+        type: Number
+    })
+    async getUserProjectRole(@Param("id") id: number, @Param("pId") pId: number) {
+        const users = await this.userService.getUserProjectRole(id, pId);
+        return users;
     }
 
     // @Get("/:id/project/:pId")
