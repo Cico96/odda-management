@@ -1,6 +1,6 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/entities/user";
-import { Repository } from "typeorm";
+import { createQueryBuilder, Repository } from "typeorm";
 import {
     paginate,
     Pagination,
@@ -42,13 +42,36 @@ export class UserService {
         });
     }
 
-    getUserProjectRole(id, pId) {
-        return this.userRepository.findOne({
-            where: {
-                'id': id, 'projects.id': pId
-            },
-            relations: ["projects", "userProjectRole", "userProjectRole.project"]
-        });
+    getUserProjectRole(id, pId: number) {
+        const query = this.userRepository.createQueryBuilder("t1")
+        .leftJoinAndSelect("t1.userProjectRole", "t2")
+        .leftJoinAndSelect("t2.projectRole", "t3")
+        .where("t1.id = :user AND t2.projectId = :project", {
+            user: id,
+            project: pId
+        }).getMany();
+        console.log(query)
+        return query;
+        // // return this.userRepository.findOne({
+        // //     where: {
+        // //         'id': id, 'projects.id': pId
+        // //     },
+        // //     relations: ["projects", "userProjectRole", "userProjectRole.project"]
+        // // });
+        // const role = this.userRepository.find({
+        //     relations: [
+        //         "userProjectRole"
+        //     ],
+        //     where: [{
+        //         id: id
+        //     }, {
+        //         userProjectRole: {
+                    
+        //         }
+        //     }]
+        // });
+        // console.log(role);
+       
     }
 
     getUserContacts(id) {
