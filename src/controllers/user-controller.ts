@@ -3,6 +3,8 @@ import { ApiBody, ApiParam, ApiResponse, ApiTags,  } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/entities/project';
 import { User } from 'src/entities/user';
+import { PaginatedRequest } from 'src/models/base-response';
+import { NewUser } from 'src/models/new-user';
 import { UserService } from 'src/services/user-service';
 import { Repository } from 'typeorm';
 
@@ -23,7 +25,7 @@ export class UserController {
     
     @Get("/")
     async getAllUsers() {
-        const users = await this.userService.getAllUsers();
+        const users = await this.userService.getAllUsers(new PaginatedRequest());
         return users;
     }
 
@@ -78,4 +80,33 @@ export class UserController {
     //     return users;
     // }
     
+    @Get("/:id/contacts")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async getUserContacts(@Param("id") id: number) {
+        const contacts = await this.userService.getUserContacts(id);
+        return contacts;
+    }
+
+    @Post("/insert")
+    @ApiBody({
+        type: NewUser,
+        required: true,
+        description: "Insert new user"
+    })
+    async insertUser(@Body() user: NewUser) {
+        await this.userService.insertUser(user);
+    }
+
+    @Get("/:id/group")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async getUserGroup(@Param("id") id: number) {
+        const group = await this.userService.getUserGroup(id);
+        return group;
+    }
 }

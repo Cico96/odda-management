@@ -1,8 +1,8 @@
 
 export class PaginatedRequest<T> {
-    pageIndex: number;
-    pageSize: number;
-    filter: T
+    pageIndex: number = 0;
+    pageSize: number = 10;
+    filter?: T
 }
 
 export class PaginatedResponse<T> {

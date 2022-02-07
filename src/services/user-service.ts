@@ -1,15 +1,31 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { pid } from "process";
 import { User } from "src/entities/user";
 import { Repository } from "typeorm";
+import {
+    paginate,
+    Pagination,
+    IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
+import { PaginatedRequest } from "src/models/base-response";
+import { NewUser } from "src/models/new-user";
 
 export class UserService {
 
     constructor(@InjectRepository(User)
     private userRepository: Repository<User>) { }
 
-    getAllUsers() {
-        return this.userRepository.find();
+    getAllUsers(pagination: PaginatedRequest<any>) {
+        console.log(pagination);
+
+        
+        const query = this.userRepository.createQueryBuilder("c");
+        query.where("c.name like :name", {name: "%sac%"})
+
+        return paginate<User>(query, {
+            limit: 100,
+            page: 1,
+            countQueries: true
+        });
     }
 
     getUserById(id) {
@@ -32,6 +48,33 @@ export class UserService {
                 'id': id, 'projects.id': pId
             },
             relations: ["projects", "userProjectRole", "userProjectRole.project"]
+        });
+    }
+
+    getUserContacts(id) {
+        return this.userRepository.findOne({
+            where: { id },
+            relations: ["contacts"]
+        });
+    }
+
+    insertUser(user: NewUser) {
+        this.userRepository.insert(user);
+    }
+
+    // deleteUser(id: number) {
+    //     const user = this.userRepository.findOne({
+    //         where: { id }
+    //     });
+    //     user.then( (u) => {
+    //         u.deletedDate;
+    //     })
+    // }
+
+    getUserGroup(id: number) {
+        return this.userRepository.findOne({
+            where: { id },
+            relations: ['groups']
         });
     }
 }
