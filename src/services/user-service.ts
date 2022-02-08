@@ -80,4 +80,17 @@ export class UserService {
             relations: ['groups']
         });
     }
+
+    getAllReports(id,pId: number) {
+        const query = this.userRepository.createQueryBuilder('user')
+        .innerJoinAndSelect("user.projects", "project")
+        .innerJoinAndSelect("project.reports", "reports")
+        .where("user.id = :user AND project.id = :project", {
+            user: id,
+            project: pId
+        })
+        .take(1)
+        .getOne();
+        return query;
+    }
 }

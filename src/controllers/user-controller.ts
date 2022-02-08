@@ -102,4 +102,19 @@ export class UserController {
         await this.userService.modifyDeleteDate(id);
         
     }
+
+    
+    @Get(":id/project/:pId/report")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    @ApiParam({
+        name: 'pId',
+        type: Number
+    })
+    async getAllReports(@Param("id") id: number, @Param("pId") pId: number ) {
+        const reports = await this.userService.getAllReports(id, pId);
+        return reports;
+    }
 }
