@@ -13,8 +13,6 @@ export class ProjectController {
     })
     @Post()
     async createProject(@Res() response, @Body() project: Project) {}
-
-    @Get('/')
-    async getAllProjects() {}
+    
 
 }
