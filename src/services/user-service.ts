@@ -17,9 +17,9 @@ export class UserService {
     getAllUsers(pagination: PaginatedRequest<any>) {
         console.log(pagination);
 
-        
+
         const query = this.userRepository.createQueryBuilder("c");
-        query.where("c.name like :name", {name: "%sac%"})
+        query.where("c.name like :name", { name: "%sac%" })
 
         return paginate<User>(query, {
             limit: 100,
@@ -44,34 +44,14 @@ export class UserService {
 
     getUserProjectRole(id, pId: number) {
         const query = this.userRepository.createQueryBuilder("t1")
-        .leftJoinAndSelect("t1.userProjectRole", "t2")
-        .leftJoinAndSelect("t2.projectRole", "t3")
-        .where("t1.id = :user AND t2.projectId = :project", {
-            user: id,
-            project: pId
-        }).getMany();
+            .leftJoinAndSelect("t1.userProjectRole", "t2")
+            .leftJoinAndSelect("t2.projectRole", "t3")
+            .where("t1.id = :user AND t2.projectId = :project", {
+                user: id,
+                project: pId
+            }).getMany();
         console.log(query)
         return query;
-        // // return this.userRepository.findOne({
-        // //     where: {
-        // //         'id': id, 'projects.id': pId
-        // //     },
-        // //     relations: ["projects", "userProjectRole", "userProjectRole.project"]
-        // // });
-        // const role = this.userRepository.find({
-        //     relations: [
-        //         "userProjectRole"
-        //     ],
-        //     where: [{
-        //         id: id
-        //     }, {
-        //         userProjectRole: {
-                    
-        //         }
-        //     }]
-        // });
-        // console.log(role);
-       
     }
 
     getUserContacts(id) {
@@ -85,14 +65,14 @@ export class UserService {
         this.userRepository.insert(user);
     }
 
-    // deleteUser(id: number) {
-    //     const user = this.userRepository.findOne({
-    //         where: { id }
-    //     });
-    //     user.then( (u) => {
-    //         u.deletedDate;
-    //     })
-    // }
+    async modifyDeleteDate(id: number) {
+        const today = new Date();
+        const user = await this.userRepository.findOne({
+            where: { id }
+        });
+        user.deletedDate = today;
+        await this.userRepository.save({ id: user.id, deletedDate: user.deletedDate });
+    }
 
     getUserGroup(id: number) {
         return this.userRepository.findOne({

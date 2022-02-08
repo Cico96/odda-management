@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res } from '@nestjs/common';
 import { ApiBody, ApiParam, ApiResponse, ApiTags,  } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/entities/project';
@@ -62,23 +62,6 @@ export class UserController {
         const users = await this.userService.getUserProjectRole(id, pId);
         return users;
     }
-
-    // @Get("/:id/project/:pId")
-    // @ApiParam({
-    //     name: 'id',
-    //     type: Number
-    // })
-    // @ApiParam({
-    //     name: 'pId',
-    //     type: Number
-    // })
-    // async getUserProjectRole(@Param("id") id: number, @Param("pId") pId: number) {
-    //     const users = await this.userRepository.findOne({
-    //         where:{id} ,
-    //         relations: ["projects", "userProjectRole", "userProjectRole.project"]
-    //     });
-    //     return users;
-    // }
     
     @Get("/:id/contacts")
     @ApiParam({
@@ -108,5 +91,15 @@ export class UserController {
     async getUserGroup(@Param("id") id: number) {
         const group = await this.userService.getUserGroup(id);
         return group;
+    }
+
+    @Put("/:id/delete")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async deleteUser(@Param("id") id: number): Promise<void> {
+        await this.userService.modifyDeleteDate(id);
+        
     }
 }

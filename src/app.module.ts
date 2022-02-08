@@ -28,6 +28,5 @@ import { typeOrmConfig } from './config/typeorm-config';
 })
 export class AppModule {
 
- 
   
 }

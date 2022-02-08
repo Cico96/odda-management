@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { EntityClassOrSchema } from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type";
 import { Activity } from "src/entities/activity";
 import { Attachment } from "src/entities/attachment";
 import { Contact } from "src/entities/contact";
@@ -22,5 +23,6 @@ export const typeOrmConfig : TypeOrmModuleOptions = {
     ],
     synchronize: true,
 }
+
 
 
