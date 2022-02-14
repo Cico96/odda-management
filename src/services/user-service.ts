@@ -15,11 +15,10 @@ export class UserService {
     private userRepository: Repository<User>) { }
 
     getAllUsers(pagination: PaginatedRequest<any>) {
-        console.log(pagination);
-
 
         const query = this.userRepository.createQueryBuilder("c");
-        query.where("c.name like :name", { name: "%sac%" })
+        //query.where("c.name like :name", { name: "%sac%" })
+        query.orderBy('c.name', 'DESC');
 
         return paginate<User>(query, {
             limit: 100,

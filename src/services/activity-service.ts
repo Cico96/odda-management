@@ -1,5 +1,6 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Activity } from "src/entities/activity";
+import { NewActivity } from "src/models/new-activity";
 import { Repository } from "typeorm";
 
 export class ActivityService {
@@ -14,5 +15,10 @@ export class ActivityService {
             where: { id },
             relations: ['report']
         });
+    }
+
+    
+    insertActivity(activity: NewActivity) {
+        this.activityRepository.insert(activity)
     }
 }

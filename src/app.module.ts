@@ -18,6 +18,10 @@ import { UserService } from './services/user-service';
 import { typeOrmConfig } from './config/typeorm-config';
 import { ProjectController } from './controllers/project-controller';
 import { ProjectService } from './services/project-service';
+import { ReportService } from './services/report-service';
+import { ReportController } from './controllers/report-controller';
+import { ActivityService } from './services/activity-service';
+import { ActivityController } from './controllers/activity-controller';
 
 
 @Module({
@@ -25,8 +29,8 @@ import { ProjectService } from './services/project-service';
     TypeOrmModule.forRoot(typeOrmConfig),
     TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group, UserProjectRole])
   ],
-  controllers: [AppController, UserController, ProjectController],
-  providers: [AppService, UserService, ProjectService],
+  controllers: [AppController, UserController, ProjectController, ReportController, ActivityController],
+  providers: [AppService, UserService, ProjectService, ReportService, ActivityService],
 })
 export class AppModule {
 
