@@ -93,7 +93,7 @@ export class UserController {
         return group;
     }
 
-    @Put("/:id/delete")
+    @Put("/:id")
     @ApiParam({
         name: 'id',
         type: Number

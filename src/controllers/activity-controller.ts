@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from "@nestjs/common";
+import { Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
 import { NewActivity } from "src/models/new-activity";
 import { ActivityService } from "src/services/activity-service";
@@ -26,5 +26,15 @@ export class ActivityController {
     })
     async insertActivity(@Param() activity: NewActivity) {
         this.activityService.insertActivity(activity);
+    }
+
+    @Put("/:id")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async deleteProject(@Param("id") id: number): Promise<void> {
+        await this.activityService.modifyDeleteDate(id);
+        
     }
 }

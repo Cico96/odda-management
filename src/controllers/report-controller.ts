@@ -1,5 +1,5 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Param, Post, Put } from "@nestjs/common";
+import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
 import { NewReport } from "src/models/new-report";
 import { ReportService } from "src/services/report-service";
 
@@ -15,8 +15,18 @@ export class ReportController {
         required: true,
         description: 'Add new report'
     })
-    addReport(@Body() newReport: NewReport) {
-        this.reportService.addReport(newReport);
+    insertReport(@Body() newReport: NewReport) {
+        this.reportService.insertReport(newReport);
+    }
+
+    @Put("/:id")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async deleteProject(@Param("id") id: number): Promise<void> {
+        await this.reportService.modifyDeleteDate(id);
+        
     }
 
 }

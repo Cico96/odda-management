@@ -45,7 +45,7 @@ export class ProjectController {
         await this.projectService.insertProject(project);
     }
 
-    @Put("/:id/delete")
+    @Put("/:id")
     @ApiParam({
         name: 'id',
         type: Number
