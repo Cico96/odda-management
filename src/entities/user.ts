@@ -151,7 +151,7 @@ export class User extends BaseEntityClass {
     @ApiProperty({
         type: Group
     })
-    @ManyToMany(() => Group)
+    @ManyToMany(() => Group, group => group.users)
     @JoinTable()
     groups: Group[];
 

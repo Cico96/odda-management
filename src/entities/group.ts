@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToMany } from "typeorm";
 import { BaseEntityClass } from "./base";
+import { User } from "./user";
 
 @Entity()
 export class Group extends BaseEntityClass {
@@ -12,5 +13,11 @@ export class Group extends BaseEntityClass {
         type: "varchar"
     })
     name: string;
+
+    @ApiProperty({
+        type: () => User
+    })
+    @ManyToMany(() => User, (u) => u.groups)
+    users: User[];
     
 }
