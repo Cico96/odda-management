@@ -22,6 +22,7 @@ import { ReportService } from './services/report-service';
 import { ReportController } from './controllers/report-controller';
 import { ActivityService } from './services/activity-service';
 import { ActivityController } from './controllers/activity-controller';
+import { Seeder } from './seeder';
 
 
 @Module({
