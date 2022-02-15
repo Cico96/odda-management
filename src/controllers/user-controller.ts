@@ -34,7 +34,7 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getUserById(@Param("id") id: number) {
+    async getUserById(@Param("id") id: number): Promise<User[]> {
         const users = await this.userService.getUserById(id);
         return users;
     }
@@ -44,7 +44,7 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getProjects(@Param("id") id: number) {
+    async getProjects(@Param("id") id: number): Promise<Project[]> {
         const projects = (await this.userService.getProjects(id)).projects;
         return projects;
     }
@@ -58,7 +58,7 @@ export class UserController {
         name: 'pId',
         type: Number
     })
-    async getProjectRole(@Param("id") id: number, @Param("pId") pId: number) {
+    async getProjectRole(@Param("id") id: number, @Param("pId") pId: number): Promise<User[]> {
         const users = await this.userService.getProjectRole(id, pId);
         return users;
     }
@@ -68,7 +68,7 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getContacts(@Param("id") id: number) {
+    async getContacts(@Param("id") id: number): Promise<User> {
         const contacts = await this.userService.getContacts(id);
         return contacts;
     }
@@ -79,7 +79,7 @@ export class UserController {
         required: true,
         description: "Insert new user"
     })
-    async insertUser(@Body() user: CreateUserDTO) {
+    async insertUser(@Body() user: CreateUserDTO): Promise<void> {
         await this.userService.insertUser(user);
     }
 
@@ -88,7 +88,7 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getGroup(@Param("id") id: number) {
+    async getGroup(@Param("id") id: number): Promise<User> {
         const group = await this.userService.getGroup(id);
         return group;
     }

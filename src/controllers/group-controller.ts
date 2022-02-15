@@ -22,7 +22,7 @@ export class GroupController {
         name: 'id',
         type: Number
     })
-    async getGroupById(@Param('id') id: number) {
+    async getGroupById(@Param('id') id: number): Promise<void> {
         const group = await this.groupService.getGroupById(id,);
     }
 

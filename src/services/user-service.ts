@@ -8,11 +8,17 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { PaginatedRequest } from "src/models/base-response";
 import { CreateUserDTO } from "src/models/request/create-user-dto";
+import { CreateAttachmentDTO } from "src/models/request/create-attachment-dto";
+import { AttachemnentService } from "./attachment-service";
+import { Body, Post } from "@nestjs/common";
+import { ApiBody } from "@nestjs/swagger";
+import { Project } from "src/entities/project";
 
 export class UserService {
 
     constructor(@InjectRepository(User)
-    private userRepository: Repository<User>) { }
+    private userRepository: Repository<User>,
+    private attachmentService: AttachemnentService) { }
 
     getAllUsers(pagination: PaginatedRequest<any>) {
 
@@ -27,21 +33,21 @@ export class UserService {
         });
     }
 
-    getUserById(id) {
+    getUserById(id): Promise<User[]> {
         return this.userRepository.find({
             where: { id },
             relations: ["projects", "userProjectRole", "userProjectRole.project"]
         });
     }
 
-    getProjects(id) {
+    getProjects(id): Promise<User> {
         return this.userRepository.findOne({
             where: { id },
             relations: ["projects", "userProjectRole", "userProjectRole.project"]
         });
     }
 
-    getProjectRole(id, pId: number) {
+    getProjectRole(id, pId: number): Promise<User[]> {
         const query = this.userRepository.createQueryBuilder("t1")
             .leftJoinAndSelect("t1.userProjectRole", "t2")
             .leftJoinAndSelect("t2.projectRole", "t3")
@@ -53,18 +59,18 @@ export class UserService {
         return query;
     }
 
-    getContacts(id) {
+    getContacts(id): Promise<User> {
         return this.userRepository.findOne({
             where: { id },
             relations: ["contacts"]
         });
     }
 
-    insertUser(user: CreateUserDTO) {
+    insertUser(user: CreateUserDTO): void {
         this.userRepository.insert(user);
     }
 
-    async modifyDeleteDate(id: number) {
+    async modifyDeleteDate(id: number): Promise<void> {
         const today = new Date();
         const user = await this.userRepository.findOne({
             where: { id }
@@ -73,14 +79,15 @@ export class UserService {
         await this.userRepository.save({ id: user.id, deletedDate: user.deletedDate });
     }
 
-    getGroup(id: number) {
+    getGroup(id: number): Promise<User> {
         return this.userRepository.findOne({
             where: { id },
             relations: ['groups']
         });
     }
 
-    getAllReports(id,pId: number) {
+    getAllReports(id,pId: number): Promise<User> {
+
         const query = this.userRepository.createQueryBuilder('user')
         .innerJoinAndSelect("user.projects", "project")
         .innerJoinAndSelect("project.reports", "reports")
@@ -92,4 +99,15 @@ export class UserService {
         .getOne();
         return query;
     }
+
+    @Post('/attachment')
+    @ApiBody({
+        type: CreateAttachmentDTO,
+        required: true,
+        description: 'Insert attachment'
+    })
+    insertAttachment(@Body() attachment: CreateAttachmentDTO): void {
+        this.attachmentService.insertAttachment(attachment);
+    }
+
 }

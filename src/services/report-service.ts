@@ -10,11 +10,11 @@ export class ReportService {
 
     }
 
-    insertReport(report: CreateReportDTO) {
+    insertReport(report: CreateReportDTO): void {
         this.reportRepository.insert(report);
     }
 
-    async modifyDeleteDate(id: number) {
+    async modifyDeleteDate(id: number): Promise<void> {
         const today = new Date();
         const report = await this.reportRepository.findOne({
             where: { id }

@@ -25,6 +25,8 @@ import { ActivityController } from './controllers/activity-controller';
 import { Seeder } from './seeder';
 import { GroupService } from './services/grop-service';
 import { GroupController } from './controllers/group-controller';
+import { AttachmentController } from './controllers/attachment-controller';
+import { AttachemnentService } from './services/attachment-service';
 
 
 @Module({
@@ -32,8 +34,8 @@ import { GroupController } from './controllers/group-controller';
     TypeOrmModule.forRoot(typeOrmConfig),
     TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group, UserProjectRole])
   ],
-  controllers: [AppController, UserController, ProjectController, ReportController, ActivityController, GroupController],
-  providers: [AppService, UserService, ProjectService, ReportService, ActivityService, GroupService],
+  controllers: [AppController, UserController, ProjectController, ReportController, ActivityController, GroupController, AttachmentController],
+  providers: [AppService, UserService, ProjectService, ReportService, ActivityService, GroupService, GroupService, AttachemnentService],
 })
 export class AppModule {
 

@@ -15,7 +15,7 @@ export class AttachmentController {
         required: true,
         description: 'Insert attachment'
     })
-    insertAttachment(@Body() attachement: CreateAttachmentDTO) {
+    insertAttachment(@Body() attachement: CreateAttachmentDTO): void {
         this.attachmentService.insertAttachment(attachement);
     }
 }

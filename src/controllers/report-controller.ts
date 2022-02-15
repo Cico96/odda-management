@@ -15,7 +15,7 @@ export class ReportController {
         required: true,
         description: 'Add new report'
     })
-    insertReport(@Body() CreateReportDTO: CreateReportDTO) {
+    insertReport(@Body() CreateReportDTO: CreateReportDTO): void {
         this.reportService.insertReport(CreateReportDTO);
     }
 
