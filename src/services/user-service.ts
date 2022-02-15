@@ -6,7 +6,7 @@ import {
     Pagination,
     IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
-import { PaginatedRequest } from "src/models/base-response";
+import { PaginatedRequest, PaginatedResponse } from "src/models/base-response";
 import { CreateUserDTO } from "src/models/request/create-user-dto";
 import { CreateAttachmentDTO } from "src/models/request/create-attachment-dto";
 import { AttachemnentService } from "./attachment-service";
@@ -20,17 +20,28 @@ export class UserService {
     private userRepository: Repository<User>,
     private attachmentService: AttachemnentService) { }
 
-    getAllUsers(pagination: PaginatedRequest<any>) {
+    async getAllUsers(pagination: PaginatedRequest<any>): Promise<Pagination<User, PaginatedResponse<any>>> {
 
         const query = this.userRepository.createQueryBuilder("c");
         //query.where("c.name like :name", { name: "%sac%" })
         query.orderBy('c.name', 'DESC');
 
-        return paginate<User>(query, {
+        const result = await paginate<User>(query, {
             limit: 100,
             page: 1,
             countQueries: true
         });
+
+        return {
+            items: result.items,
+            meta: {
+                data: [],
+                filteredCount: result.items.length,
+                pageIndex: result.meta.currentPage,
+                pageSize: result.meta.itemsPerPage,
+                totalCount: result.meta.totalItems
+            }
+        };
     }
 
     getUserById(id): Promise<User[]> {
