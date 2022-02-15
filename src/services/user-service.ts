@@ -34,14 +34,14 @@ export class UserService {
         });
     }
 
-    getUserProjects(id) {
+    getProjects(id) {
         return this.userRepository.findOne({
             where: { id },
             relations: ["projects", "userProjectRole", "userProjectRole.project"]
         });
     }
 
-    getUserProjectRole(id, pId: number) {
+    getProjectRole(id, pId: number) {
         const query = this.userRepository.createQueryBuilder("t1")
             .leftJoinAndSelect("t1.userProjectRole", "t2")
             .leftJoinAndSelect("t2.projectRole", "t3")
@@ -53,7 +53,7 @@ export class UserService {
         return query;
     }
 
-    getUserContacts(id) {
+    getContacts(id) {
         return this.userRepository.findOne({
             where: { id },
             relations: ["contacts"]
@@ -73,7 +73,7 @@ export class UserService {
         await this.userRepository.save({ id: user.id, deletedDate: user.deletedDate });
     }
 
-    getUserGroup(id: number) {
+    getGroup(id: number) {
         return this.userRepository.findOne({
             where: { id },
             relations: ['groups']

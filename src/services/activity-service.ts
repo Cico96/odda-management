@@ -10,7 +10,7 @@ export class ActivityService {
 
     }
 
-    getReportsForActivity(id: number) {
+    getReports(id: number) {
         return this.activityRepository.find({
             where: { id },
             relations: ['report']

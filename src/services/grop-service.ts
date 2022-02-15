@@ -1,3 +1,4 @@
+import { Query } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { paginate } from "nestjs-typeorm-paginate";
 import { Group } from "src/entities/group";
@@ -23,10 +24,23 @@ export class GroupService {
         });
     }
 
-    getAllUserFromGroup(id: number) {
-        return this.groupRepository.find({
-            where: { id },
-            relations: ['users']
+    getGroupById(id: number) {
+        return this.groupRepository.findOne(id);
+    }
+
+    async getUsers(id: number, pagination: PaginatedRequest<any>) {
+        
+        const query = this.groupRepository.createQueryBuilder('q');
+        query.innerJoinAndSelect('q.users', 'users')
+        .where('q.id = :group', {
+            group: id
+        })
+        .getMany();
+
+        return paginate<Group>(query, {
+            limit: 100,
+            page: 1,
+            countQueries: true
         })
     }
 
@@ -38,7 +52,6 @@ export class GroupService {
         group.deletedDate = today;
         await this.groupRepository.save({ id: group.id, deletedDate: group.deletedDate });
     }
-
 
 
 

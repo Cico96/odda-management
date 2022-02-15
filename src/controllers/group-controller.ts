@@ -22,9 +22,18 @@ export class GroupController {
         name: 'id',
         type: Number
     })
-    async getGroupById(id: number) {
-        const group = await this.groupService.getAllUserFromGroup(id);
-        return group;
+    async getGroupById(@Param('id') id: number) {
+        const group = await this.groupService.getGroupById(id,);
+    }
+
+    @Get('/:id/users')
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async getUsers(@Param("id", {transform: (v) => Number(v)}) id: number) {
+        const users = await this.groupService.getUsers(id, new PaginatedRequest());
+        return users;
     }
 
     @Put("/:id")

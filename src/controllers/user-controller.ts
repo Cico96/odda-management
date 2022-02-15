@@ -44,8 +44,8 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getUserProjects(@Param("id") id: number) {
-        const projects = (await this.userService.getUserProjects(id)).projects;
+    async getProjects(@Param("id") id: number) {
+        const projects = (await this.userService.getProjects(id)).projects;
         return projects;
     }
 
@@ -58,8 +58,8 @@ export class UserController {
         name: 'pId',
         type: Number
     })
-    async getUserProjectRole(@Param("id") id: number, @Param("pId") pId: number) {
-        const users = await this.userService.getUserProjectRole(id, pId);
+    async getProjectRole(@Param("id") id: number, @Param("pId") pId: number) {
+        const users = await this.userService.getProjectRole(id, pId);
         return users;
     }
     
@@ -68,8 +68,8 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getUserContacts(@Param("id") id: number) {
-        const contacts = await this.userService.getUserContacts(id);
+    async getContacts(@Param("id") id: number) {
+        const contacts = await this.userService.getContacts(id);
         return contacts;
     }
 
@@ -88,8 +88,8 @@ export class UserController {
         name: 'id',
         type: Number
     })
-    async getUserGroup(@Param("id") id: number) {
-        const group = await this.userService.getUserGroup(id);
+    async getGroup(@Param("id") id: number) {
+        const group = await this.userService.getGroup(id);
         return group;
     }
 

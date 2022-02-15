@@ -14,8 +14,8 @@ export class ActivityController {
         name: 'id',
         type: Number
     })
-    async getReportsForActivity(@Param() id: number) {
-        const reports = await this.activityService.getReportsForActivity(id);
+    async getReports(@Param() id: number) {
+        const reports = await this.activityService.getReports(id);
     }
 
     @Post("/activity")
