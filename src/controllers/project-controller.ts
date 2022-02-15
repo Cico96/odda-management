@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Res } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
+import { Pagination } from "nestjs-typeorm-paginate";
 import { Project } from "src/entities/project";
 import { PaginatedRequest } from "src/models/base-response";
 import { CreateProjectDTO } from "src/models/request/create-project-dto";
@@ -30,7 +31,7 @@ export class ProjectController {
         name: 'id',
         type: Number
     })
-    async getUserById(@Param("id") id: number) {
+    async getUserById(@Param("id") id: number): Promise<Project[]> {
         const project = await this.projectService.getProjectById(id);
         return project;
     }
@@ -41,7 +42,7 @@ export class ProjectController {
         required: true,
         description: "Insert new project"
     })
-    async insertUser(@Body() project: CreateProjectDTO) {
+    async insertUser(@Body() project: CreateProjectDTO): Promise<void> {
         await this.projectService.insertProject(project);
     }
 
@@ -60,7 +61,7 @@ export class ProjectController {
         name: 'id',
         type: Number
     })
-    async getAllReports(id: number) {
+    async getAllReports(id: number): Promise<Project[]> {
         const reports = await this.projectService.getAllReports(id);
         return reports;
     }

@@ -14,7 +14,7 @@ export class ActivityController {
         name: 'id',
         type: Number
     })
-    async getReports(@Param() id: number) {
+    async getReports(@Param() id: number): Promise<void> {
         const reports = await this.activityService.getReports(id);
     }
 
@@ -24,7 +24,7 @@ export class ActivityController {
         required: true,
         description: 'Add new activity'
     })
-    async insertActivity(@Param() activity: CreateActivityDTO) {
+    async insertActivity(@Param() activity: CreateActivityDTO): Promise<void> {
         this.activityService.insertActivity(activity);
     }
 

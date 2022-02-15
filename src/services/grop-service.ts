@@ -24,7 +24,7 @@ export class GroupService {
         });
     }
 
-    getGroupById(id: number) {
+    getGroupById(id: number): Promise<Group> {
         return this.groupRepository.findOne(id);
     }
 
@@ -44,7 +44,7 @@ export class GroupService {
         })
     }
 
-    async modifyDeleteDate(id: number) {
+    async modifyDeleteDate(id: number): Promise<void> {
         const today = new Date();
         const group = await this.groupRepository.findOne({
             where: { id }

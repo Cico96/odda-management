@@ -23,18 +23,18 @@ export class ProjectService {
 
     }
 
-    getProjectById(id: number) {
+    getProjectById(id: number): Promise<Project[]> {
         return this.projectRepository.find({
             where: { id },
             relations: ['userProjectRole']
         });
     }
 
-    insertProject(project: CreateProjectDTO) {
+    insertProject(project: CreateProjectDTO): void {
         this.projectRepository.insert(project);
     }
 
-    async modifyDeleteDate(id: number) {
+    async modifyDeleteDate(id: number): Promise<void> {
         const today = new Date();
         const project = await this.projectRepository.findOne({
             where: { id }
@@ -43,7 +43,7 @@ export class ProjectService {
         await this.projectRepository.save({ id: project.id, deletedDate: project.deletedDate });
     }
 
-    getAllReports(id: number) {
+    getAllReports(id: number): Promise<Project[]> {
         return this.projectRepository.find({
             where: { id },
             relations: ['reports']

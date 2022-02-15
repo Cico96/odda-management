@@ -10,7 +10,7 @@ export class ActivityService {
 
     }
 
-    getReports(id: number) {
+    getReports(id: number): Promise<Activity[]> {
         return this.activityRepository.find({
             where: { id },
             relations: ['report']
@@ -18,11 +18,11 @@ export class ActivityService {
     }
 
     
-    insertActivity(activity: CreateActivityDTO) {
+    insertActivity(activity: CreateActivityDTO): void {
         this.activityRepository.insert(activity)
     }
 
-    async modifyDeleteDate(id: number) {
+    async modifyDeleteDate(id: number): Promise<void> {
         const today = new Date();
         const activity = await this.activityRepository.findOne({
             where: { id }
