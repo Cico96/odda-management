@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/entities/project';
 import { User } from 'src/entities/user';
 import { PaginatedRequest } from 'src/models/base-response';
-import { NewUser } from 'src/models/new-user';
+import { CreateUserDTO } from 'src/models/request/create-user-dto';
 import { UserService } from 'src/services/user-service';
 import { Repository } from 'typeorm';
 
@@ -75,11 +75,11 @@ export class UserController {
 
     @Post("/insert")
     @ApiBody({
-        type: NewUser,
+        type: CreateUserDTO,
         required: true,
         description: "Insert new user"
     })
-    async insertUser(@Body() user: NewUser) {
+    async insertUser(@Body() user: CreateUserDTO) {
         await this.userService.insertUser(user);
     }
 

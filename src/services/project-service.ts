@@ -2,7 +2,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { paginate } from "nestjs-typeorm-paginate";
 import { Project } from "src/entities/project";
 import { PaginatedRequest } from "src/models/base-response";
-import { NewProject } from "src/models/new-project";
+import { CreateProjectDTO } from "src/models/request/create-project-dto";
 import { Repository } from "typeorm";
 
 export class ProjectService {
@@ -30,7 +30,7 @@ export class ProjectService {
         });
     }
 
-    insertProject(project: NewProject) {
+    insertProject(project: CreateProjectDTO) {
         this.projectRepository.insert(project);
     }
 

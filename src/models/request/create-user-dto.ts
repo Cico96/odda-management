@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class NewUser {
+export class CreateUserDTO {
 
     @ApiProperty({
         type: String

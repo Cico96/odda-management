@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class NewActivity {
+export class CreateActivityDTO {
 
     @ApiProperty({
         type: String

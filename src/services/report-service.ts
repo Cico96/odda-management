@@ -1,6 +1,6 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Report } from "src/entities/report";
-import { NewReport } from "src/models/new-report";
+import { CreateReportDTO } from "src/models/request/create-report-dto";
 import { Repository } from "typeorm";
 
 export class ReportService {
@@ -10,7 +10,7 @@ export class ReportService {
 
     }
 
-    insertReport(report: NewReport) {
+    insertReport(report: CreateReportDTO) {
         this.reportRepository.insert(report);
     }
 

@@ -1,6 +1,6 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Activity } from "src/entities/activity";
-import { NewActivity } from "src/models/new-activity";
+import { CreateActivityDTO } from "src/models/request/create-activity-dto";
 import { Repository } from "typeorm";
 
 export class ActivityService {
@@ -18,7 +18,7 @@ export class ActivityService {
     }
 
     
-    insertActivity(activity: NewActivity) {
+    insertActivity(activity: CreateActivityDTO) {
         this.activityRepository.insert(activity)
     }
 

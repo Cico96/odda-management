@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Put, Res } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
 import { Project } from "src/entities/project";
 import { PaginatedRequest } from "src/models/base-response";
-import { NewProject } from "src/models/new-project";
+import { CreateProjectDTO } from "src/models/request/create-project-dto";
 import { ProjectService } from "src/services/project-service";
 
 @ApiTags("project")
@@ -37,11 +37,11 @@ export class ProjectController {
 
     @Post("/insert")
     @ApiBody({
-        type: NewProject,
+        type: CreateProjectDTO,
         required: true,
         description: "Insert new project"
     })
-    async insertUser(@Body() project: NewProject) {
+    async insertUser(@Body() project: CreateProjectDTO) {
         await this.projectService.insertProject(project);
     }
 

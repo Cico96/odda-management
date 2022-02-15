@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
-import { NewActivity } from "src/models/new-activity";
+import { CreateActivityDTO } from "src/models/request/create-activity-dto";
 import { ActivityService } from "src/services/activity-service";
 
 @ApiTags("activity")
@@ -20,11 +20,11 @@ export class ActivityController {
 
     @Post("/activity")
     @ApiBody({
-        type: NewActivity,
+        type: CreateActivityDTO,
         required: true,
         description: 'Add new activity'
     })
-    async insertActivity(@Param() activity: NewActivity) {
+    async insertActivity(@Param() activity: CreateActivityDTO) {
         this.activityService.insertActivity(activity);
     }
 

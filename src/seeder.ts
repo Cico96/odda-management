@@ -1,11 +1,11 @@
-import { NewProject } from "./models/new-project";
+import { CreateProjectDTO } from "./models/request/create-project-dto";
 import { ProjectService } from "./services/project-service";
 
 export class Seeder {
 
     date = new Date();
 
-    project: NewProject = {
+    project: CreateProjectDTO = {
         name: "Odda Web Develop",
         description: "Develop web experience",
         startDate: this.date,

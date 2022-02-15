@@ -7,7 +7,7 @@ import {
     IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 import { PaginatedRequest } from "src/models/base-response";
-import { NewUser } from "src/models/new-user";
+import { CreateUserDTO } from "src/models/request/create-user-dto";
 
 export class UserService {
 
@@ -60,7 +60,7 @@ export class UserService {
         });
     }
 
-    insertUser(user: NewUser) {
+    insertUser(user: CreateUserDTO) {
         this.userRepository.insert(user);
     }
 

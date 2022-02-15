@@ -1,6 +1,6 @@
 import { Body, Controller, Param, Post, Put } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
-import { NewReport } from "src/models/new-report";
+import { CreateReportDTO } from "src/models/request/create-report-dto";
 import { ReportService } from "src/services/report-service";
 
 @ApiTags("report")
@@ -11,12 +11,12 @@ export class ReportController {
 
     @Post('/report')
     @ApiBody({
-        type: NewReport,
+        type: CreateReportDTO,
         required: true,
         description: 'Add new report'
     })
-    insertReport(@Body() newReport: NewReport) {
-        this.reportService.insertReport(newReport);
+    insertReport(@Body() CreateReportDTO: CreateReportDTO) {
+        this.reportService.insertReport(CreateReportDTO);
     }
 
     @Put("/:id")
