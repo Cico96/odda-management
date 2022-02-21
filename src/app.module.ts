@@ -27,6 +27,8 @@ import { GroupService } from './services/grop-service';
 import { GroupController } from './controllers/group-controller';
 import { AttachmentController } from './controllers/attachment-controller';
 import { AttachemnentService } from './services/attachment-service';
+import { SystemRoleController } from './controllers/systemRole-controller';
+import { SystemRoleService } from './services/systemRole-service';
 
 
 @Module({
@@ -34,8 +36,8 @@ import { AttachemnentService } from './services/attachment-service';
     TypeOrmModule.forRoot(typeOrmConfig),
     TypeOrmModule.forFeature([User, Attachment, Contact, Project, ProjectRole, SystemRole, Activity, Report, Group, UserProjectRole])
   ],
-  controllers: [AppController, UserController, ProjectController, ReportController, ActivityController, GroupController, AttachmentController],
-  providers: [AppService, UserService, ProjectService, ReportService, ActivityService, GroupService, GroupService, AttachemnentService],
+  controllers: [AppController, UserController, ProjectController, ReportController, ActivityController, GroupController, AttachmentController, SystemRoleController],
+  providers: [AppService, UserService, ProjectService, ReportService, ActivityService, GroupService, GroupService, AttachemnentService, SystemRoleService],
 })
 export class AppModule {
 
