@@ -1,6 +1,6 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/entities/user";
-import { createQueryBuilder, Repository } from "typeorm";
+import { createQueryBuilder, getConnection, Repository } from "typeorm";
 import {
     paginate,
     Pagination,
@@ -12,7 +12,6 @@ import { CreateAttachmentDTO } from "src/models/request/create-attachment-dto";
 import { AttachemnentService } from "./attachment-service";
 import { Body, Post } from "@nestjs/common";
 import { ApiBody } from "@nestjs/swagger";
-import { Project } from "src/entities/project";
 
 export class UserService {
 
@@ -120,5 +119,54 @@ export class UserService {
     insertAttachment(@Body() attachment: CreateAttachmentDTO): void {
         this.attachmentService.insertAttachment(attachment);
     }
+
+
+    async addSystemRole(id: number, role: string): Promise<void> {
+        const user = await this.userRepository.findOne({
+            where: { id }
+        });
+        user.roles.forEach( (r) => {
+            r.type = role;
+        });
+        await this.userRepository.save({id: user.id, roles: user.roles});
+    }
+
+    async addProjectRole(id: number, role: string) {
+        const user = await this.userRepository.findOne({
+            where: { id }
+        });
+        user.userProjectRole.forEach((u) => {
+            u.projectRole.type = role;
+        });
+        await this.userRepository.save({id: user.id, userProjectRole: user.userProjectRole});
+    }
+
+    // async addRole(id: number, pId: number, role: string) {
+
+    // const query = await this.userRepository.createQueryBuilder('user')
+    // .innerJoinAndSelect("user.projects", "project")
+    // .where("user.id = :user AND project.id = :project", {
+    //     user: id,
+    //     project: pId
+    // });
+
+    // }
+
+    
+    // async addSystemRole(id: number, role: string) {
+
+    //     await getConnection()
+    //     .createQueryBuilder()
+    //     .update(User)
+    //     .set({
+    //         roles: () =>  role
+    //     })
+    //     .where("id = :id", {id: id})
+    //     .execute();
+
+    // }
+
+
+
 
 }
