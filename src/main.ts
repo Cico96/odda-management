@@ -7,7 +7,7 @@ async function bootstrap() {
   
   const config = new DocumentBuilder()
     .setTitle('Odda-Management')
-    .setDescription('The cats API description')
+    .setDescription('The Odda management system')
     .setVersion('1.0')
     //.addTag('cats')
     .build();

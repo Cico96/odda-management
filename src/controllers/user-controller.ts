@@ -118,16 +118,14 @@ export class UserController {
         return reports;
     }
 
-    // @Put(":id/roles")
+    // @Get(":id/roles")
     // @ApiParam({
     //     name: 'id',
     //     type: Number
     // })
-    // @ApiParam({
-    //     name: 'role',
-    //     type: Number
-    // })
-    // async addSystemRoles(@Param() id: number, @Param() role: number) {
-    //     await this.userService.addSystemRole(id, role);
+    // async addProjectRole(@Param("id") id: number) {
+    //     const roles = await this.userService.addProjectRole(id);
+    //     console.log(roles);
+    //     return roles;
     // }
 }

@@ -13,12 +13,14 @@ import { AttachemnentService } from "./attachment-service";
 import { Body, Post } from "@nestjs/common";
 import { ApiBody } from "@nestjs/swagger";
 import { SystemRole } from "src/entities/systemRole";
+import { ProjectService } from "./project-service";
 
 export class UserService {
 
     constructor(@InjectRepository(User)
     private userRepository: Repository<User>,
-    private attachmentService: AttachemnentService) { }
+    private attachmentService: AttachemnentService,
+    private projectService: ProjectService) { }
 
     async getAllUsers(pagination: PaginatedRequest<any>): Promise<Pagination<User, PaginatedResponse<any>>> {
 
@@ -122,7 +124,7 @@ export class UserService {
     }
 
 
-    // async addSystemRole(id: number, role: string): Promise<void> {
+    // async addProjectRole(id: number, role: string): Promise<void> {
     //     const user = await this.userRepository.findOne({
     //         where: { id }
     //     });
@@ -132,7 +134,7 @@ export class UserService {
     //     await this.userRepository.save({id: user.id, roles: user.roles});
     // }
 
-    // async addSystemRole(id: number, role: SystemRole): Promise<void> {
+    // async addProjectRole(id: number, role: SystemRole): Promise<void> {
 
     //     const query = await this.userRepository.findOne({id}, {
     //         relations: ['roles']
@@ -143,15 +145,16 @@ export class UserService {
     //     }
     // }
 
-    async addProjectRole(id: number, role: string) {
-        const user = await this.userRepository.findOne({
-            where: { id }
-        });
-        user.userProjectRole.forEach((u) => {
-            u.projectRole.type = role;
-        });
-        await this.userRepository.save({id: user.id, userProjectRole: user.userProjectRole});   
+    async addProjectRole(id, pId) {
+
+        // this.userRepository.findOne(id).then((res) => {
+        //     const user = res.id;
+
+        //     this.projectService.getProjectById(pId).then((r)=> {
+        //         const project = r.
+        //     })
+        // })
+
+        
     }
-
-
 }
