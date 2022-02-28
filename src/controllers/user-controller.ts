@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Res } from '@nestjs/co
 import { ApiBody, ApiParam, ApiResponse, ApiTags,  } from '@nestjs/swagger';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Project } from 'src/entities/project';
+import { SystemRole } from 'src/entities/systemRole';
 import { User } from 'src/entities/user';
 import { PaginatedRequest, PaginatedResponse } from 'src/models/base-response';
 import { CreateUserDTO } from 'src/models/request/create-user-dto';
@@ -117,16 +118,16 @@ export class UserController {
         return reports;
     }
 
-    @Post(":id/roles")
-    @ApiParam({
-        name: 'id',
-        type: Number
-    })
-    @ApiParam({
-        name: 'role',
-        type: String
-    })
-    async addSystemRoles(@Param() id: number, @Param() role: string) {
-        await this.userService.addSystemRole(id, role);
-    }
+    // @Put(":id/roles")
+    // @ApiParam({
+    //     name: 'id',
+    //     type: Number
+    // })
+    // @ApiParam({
+    //     name: 'role',
+    //     type: Number
+    // })
+    // async addSystemRoles(@Param() id: number, @Param() role: number) {
+    //     await this.userService.addSystemRole(id, role);
+    // }
 }

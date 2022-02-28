@@ -1,6 +1,6 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "src/entities/user";
-import { createQueryBuilder, getConnection, Repository } from "typeorm";
+import { createQueryBuilder, getConnection, getRepository, Repository } from "typeorm";
 import {
     paginate,
     Pagination,
@@ -12,6 +12,7 @@ import { CreateAttachmentDTO } from "src/models/request/create-attachment-dto";
 import { AttachemnentService } from "./attachment-service";
 import { Body, Post } from "@nestjs/common";
 import { ApiBody } from "@nestjs/swagger";
+import { SystemRole } from "src/entities/systemRole";
 
 export class UserService {
 
@@ -121,15 +122,26 @@ export class UserService {
     }
 
 
-    async addSystemRole(id: number, role: string): Promise<void> {
-        const user = await this.userRepository.findOne({
-            where: { id }
-        });
-        user.roles.forEach( (r) => {
-            r.type = role;
-        });
-        await this.userRepository.save({id: user.id, roles: user.roles});
-    }
+    // async addSystemRole(id: number, role: string): Promise<void> {
+    //     const user = await this.userRepository.findOne({
+    //         where: { id }
+    //     });
+    //     user.roles.forEach( (r) => {    
+    //         r.type = role;
+    //     });
+    //     await this.userRepository.save({id: user.id, roles: user.roles});
+    // }
+
+    // async addSystemRole(id: number, role: SystemRole): Promise<void> {
+
+    //     const query = await this.userRepository.findOne({id}, {
+    //         relations: ['roles']
+    //     })
+
+    //     if(query) {
+    //         await this.userRepository.save(role)
+    //     }
+    // }
 
     async addProjectRole(id: number, role: string) {
         const user = await this.userRepository.findOne({
@@ -138,35 +150,8 @@ export class UserService {
         user.userProjectRole.forEach((u) => {
             u.projectRole.type = role;
         });
-        await this.userRepository.save({id: user.id, userProjectRole: user.userProjectRole});
+        await this.userRepository.save({id: user.id, userProjectRole: user.userProjectRole});   
     }
-
-    // async addRole(id: number, pId: number, role: string) {
-
-    // const query = await this.userRepository.createQueryBuilder('user')
-    // .innerJoinAndSelect("user.projects", "project")
-    // .where("user.id = :user AND project.id = :project", {
-    //     user: id,
-    //     project: pId
-    // });
-
-    // }
-
-    
-    // async addSystemRole(id: number, role: string) {
-
-    //     await getConnection()
-    //     .createQueryBuilder()
-    //     .update(User)
-    //     .set({
-    //         roles: () =>  role
-    //     })
-    //     .where("id = :id", {id: id})
-    //     .execute();
-
-    // }
-
-
 
 
 }

@@ -1,5 +1,5 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { ApiBody, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Param, Post, Put } from "@nestjs/common";
+import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
 import { CreateSystemRoleDTO } from "src/models/request/create-systemRole-dto";
 import { SystemRoleService } from "src/services/systemRole-service";
 
@@ -15,7 +15,18 @@ export class SystemRoleController {
         required: true,
         description: 'Insert system role'
     })
-    async insertSystemRole(@Body() systemRole: CreateSystemRoleDTO) {
-        await this.systemRoleService.insertSystemRole(systemRole);
+    async insert(@Body() systemRole: CreateSystemRoleDTO) {
+        await this.systemRoleService.insert(systemRole);
+    }
+
+
+    @Put("/:id")
+    @ApiParam({
+        name: 'id',
+        type: Number
+    })
+    async deleteUser(@Param("id") id: number): Promise<void> {
+        await this.systemRoleService.modifyDeleteDate(id);
+        
     }
 }

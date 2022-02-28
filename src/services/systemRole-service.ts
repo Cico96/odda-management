@@ -8,7 +8,16 @@ export class SystemRoleService {
     constructor(@InjectRepository(SystemRole)
     private systemRoleRepository: Repository<SystemRole>) {}
 
-    insertSystemRole(systemRole: CreateSystemRoleDTO): void {
+    insert(systemRole: CreateSystemRoleDTO): void {
         this.systemRoleRepository.insert(systemRole);
+    }
+
+    async modifyDeleteDate(id: number) {
+        const today = new Date();
+        const role = await this.systemRoleRepository.findOne({
+            where: { id }
+        });
+        role.deletedDate = today;
+        await this.systemRoleRepository.save({ id: role.id, deletedDate: role.deletedDate });
     }
 }
